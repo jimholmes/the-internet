@@ -1,3 +1,35 @@
+#0.38.1
++ Removed pixel specifcation by URL from /shifting_content
++ Reworked the example in /shifting_content so it leverages a menu bar that has a rogue button from time to time
+
+#0.38.0
++ Updated shifting content so it defaults to 10 pixels, but can be changed in the URL by adding a /number (e.g., /shifting_content/100)
++ Added an example for disappearing/reappearing elements on each page load
+
+#0.37.1
++ Added missing gem to Gemfile
++ Updated buttons on /challenging\_dom so there are fewer and their text changes on each page load
+
+#0.37.0
++ Small copy tweak to /dynamic_content
++ Added body text that shifts by 1 pixel to /shifting_content
++ Added /challenging_dom example
+
+#0.36.1
++ Fixed a small rendering issue on /dynamic_content
+
+#0.36.0
++ Added 2 examples to help aid with automated visual testing.
+
+1. Loads dynamic text and images on each page refresh
+2. Renders the page contents off by a few pixels
+
+#0.35.1
++ Added secure file downloads to the examples list
+
+#0.35.0
++ Added an example for broken images
+
 #0.34.0
 + Added an example that demonstrates a slow loading resource
 

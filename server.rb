@@ -3,6 +3,7 @@ require 'sinatra'
 require 'sinatra/flash'
 require 'zurb-foundation'
 require 'compass'
+require 'faker'
 
 enable :sessions
 
@@ -338,4 +339,47 @@ end
 get '/slow_external' do
   sleep 30
   status 200
+end
+
+get '/broken_images' do
+  erb :broken_images
+end
+
+get '/dynamic_content' do
+  @copy = []
+  3.times { @copy << Faker::Lorem.sentence(30) }
+  @images = Dir.glob('public/img/avatars/*').map { |f| f.split('/').last }
+  erb :dynamic_content
+end
+
+get '/shifting_content' do
+  pixel_count = [0, 20]
+  @pixel_shift = pixel_count[rand(2)]
+  erb :shifting_content
+end
+
+get '/challenging_dom' do
+  require 'uuid'
+  @text = %w(foo bar baz qux)
+  @id = []
+  20.times { @id << UUID.new.generate }
+  erb :challenging_dom
+end
+
+get '/disappearing_elements' do
+  markup = [%q{<ul>
+                  <li><a href="/">Home</a></li>
+                  <li><a href="/about/">About</a></li>
+                  <li><a href="/contact-us/">Contact Us</a></li>
+                  <li><a href="/portfolio/">Portfolio</a></li>
+                  <li><a href="/gallery/">Gallery</a></li>
+                <ul>},
+              %q{<ul>
+                  <li><a href="/">Home</a></li>
+                  <li><a href="/about/">About</a></li>
+                  <li><a href="/contact-us/">Contact Us</a></li>
+                  <li><a href="/portfolio/">Portfolio</a></li>
+                <ul>}]
+  @payload = markup[rand(2)]
+  erb :disappear
 end
