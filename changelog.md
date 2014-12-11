@@ -1,5 +1,14 @@
+#0.39.0
++ Pulled in the pull request for a dynamic controls example
+
+#0.38.4
++ Added a /shifting_content/random to load the shift randomly for simpler automated visual testing
+
+#0.38.3
++ Updated /shifting_content so it alternates the shift on each page load rather than randomly
+
 #0.38.2
-+ Changed pixel shifting on /shfting_content from 20 to 25 pixels
++ Changed pixel shifting on /shifting_content from 20 to 25 pixels
 
 #0.38.1
 + Removed pixel specification by URL from /shifting_content
