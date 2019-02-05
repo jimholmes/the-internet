@@ -9,11 +9,7 @@ require 'faker'
 
 helpers Sinatra::Cookies
 set :cookie_options, :domain => nil
-enable :sessions
-
-configure :production do
-  require 'newrelic_rpm'
-end
+enable :sessions, :logging
 
 get '/' do
   erb :index
@@ -24,7 +20,8 @@ get '/upload' do
 end
 
 post '/upload' do
-  file = params['myfile']
+  file = params['file']
+  puts file.inspect
   File.open('public/uploads/' + file[:filename], 'w') do |f|
     f.write(file[:tempfile].read)
   end
@@ -65,6 +62,10 @@ get '/download_secure/:filename' do |filename|
   send_file "public/uploads/#{filename}",
     :filename => filename,
     :type => mime_type
+end
+
+get '/horizontal_slider' do
+  erb :horizontal_slider
 end
 
 def get_mime_type_for(filename)
@@ -124,7 +125,7 @@ get '/windows' do
 end
 
 get '/windows/new' do
-  erb :new_window, :layout => false
+  erb :new_window, layout: false
 end
 
 get '/dropdown' do
@@ -354,32 +355,64 @@ get '/broken_images' do
 end
 
 get '/dynamic_content' do
+  @static_content = (params[:with_content] == 'static')
   @copy = []
   3.times { @copy << Faker::Lorem.sentence(30) }
   @images = Dir.glob('public/img/avatars/*').map { |f| f.split('/').last }
   erb :dynamic_content
 end
 
-get '/shifting_content' do
-  pixel_count = [0, 25]
-  cookies[:page_visit_count] ||= '0'
-  page_visit_count = cookies[:page_visit_count].to_i
-
-  if page_visit_count.even?
-    @pixel_shift = pixel_count[0]
+def shift_tracker
+  if params[:pixel_shift]
+    pixel_count = [0, params[:pixel_shift].to_i]
   else
-    @pixel_shift = pixel_count[1]
+    pixel_count = [0, 25]
   end
 
-  page_visit_count += 1
-  cookies[:page_visit_count] = page_visit_count.to_s
+  if params[:mode] == 'random'
+    @pixel_shift = pixel_count[rand(2)]
+  else
+    cookies[:page_visit_count] ||= '0'
+    page_visit_count = cookies[:page_visit_count].to_i
+
+    if page_visit_count.even?
+      @pixel_shift = pixel_count[0]
+    else
+      @pixel_shift = pixel_count[1]
+    end
+    page_visit_count += 1
+    cookies[:page_visit_count] = page_visit_count.to_s
+  end
+end
+
+get '/shifting_content' do
   erb :shifting_content
 end
 
-get '/shifting_content/random' do
-  pixel_count = [0, 25]
-  @pixel_shift = pixel_count[rand(2)]
-  erb :shifting_content
+get '/shifting_content/menu' do
+  shift_tracker
+  erb :shifting_content_menu
+end
+
+get '/shifting_content/image' do
+  shift_tracker
+  if params[:image_type] == 'simple'
+    @file = '/img/avatars/Original-Facebook-Geek-Profile-Avatar-2.jpg'
+  else
+    @file = '/img/avatar.jpg'
+  end
+  erb :shifting_content_image
+end
+
+get '/shifting_content/list' do
+  @copy = []
+  @copy << "Important Information You're Looking For"
+  @copy << "Nesciunt autem eum odit fuga tempora deleniti."
+  @copy << "Vel aliquid dolores veniam enim nesciunt libero quaerat."
+  @copy << "Sed deleniti blanditiis odio laudantium."
+  @copy << "Et numquam et aliquam."
+  @copy.shuffle!
+  erb :shifting_content_list
 end
 
 get '/challenging_dom' do
@@ -406,4 +439,29 @@ get '/disappearing_elements' do
                 <ul>}]
   @payload = markup[rand(2)]
   erb :disappear
+end
+
+get '/typos' do
+  @copy = ["Sometimes you'll see a typo, other times you won't.",
+           "Sometimes you'll see a typo, other times you won,t."].at(rand(2))
+  erb :typos
+end
+
+get '/infinite_scroll' do
+  erb :infinite_scroll
+end
+
+get '/infinite_scroll/:number' do |number|
+  "<br />#{Faker::Lorem.sentence(300)}\
+  <a href='/infinite_scroll/#{number.to_i + 1}'>next page</a>"
+end
+
+get '/floating_menu' do
+  @copy = []
+  10.times { @copy << Faker::Lorem.sentence(300) }
+  erb :floating_menu
+end
+
+get '/exit_intent' do
+  erb :exit_intent
 end

@@ -1,3 +1,90 @@
+#0.51.0
++ Added an async enable/disable element example to /dynamic_controls
+
+#0.50.1
++ Updates to README.template and README.md
+
+#0.50.0
++ Pulled in PR for Horizontal Slider (thanks [pittgoose](https://github.com/pittgoose)!)
+
+#0.49.5
++ Removed missed dependency that was causing a production outage
+
+#0.49.4
++ Removed unused Gems from Gemfile
++ Specify Ruby version number in Gemfile
+
+#0.49.3
++ Added MIT license to project
++ Cleaned up unused configurations for NewRelic and TravisCI
+
+#0.49.1
++ Added /exit_intent example which triggers a modal dialog when the mouse leaves the viewport window
+
+#0.48.4
++ Fixed broken sorting functionality on /tables
+
+#0.48.3
++ Added footer to all pages with "Power by" info
+
+#0.48.2
++ Added a Rake task to cleanup uploads directory
+
+#0.48.1
++ Fixed a typo on /infinite_scroll
++ Adjusted the duration for the floating menu to follow the user scroll from 400 ms to 1 ms
+
+#0.48.0
++ Added an /infinite_scroll example
++ Added a /floating_menu example
+
+#0.47.1
++ Made it so the last row of /dynamic_content when viewing it in static mode will have a unique image on each page refresh
+
+#0.47.0
++ Updated file upload so you can drag/drop a file from outside of the browser. Updated jQuery in the process, and added jQuery-UI
++ Made it so all of the copy in /shifting_content/list is static, while preserving the dynamic order on page refresh
+
+#0.46.0
++ Added parameter to /dynamic_content that can make some of the list items static
++ Updated parameter copy on /shifting_content/image that tells users how to load a simple image
++ Added a new /shifting_content example with dynamic list data that has a recurring value which persists and moves around
+
+#0.45.1
++ Updated /checkboxes checkbox field text to be more accurate
+
+#0.45.0
++ Updated /checkboxes so it auto updates the markup to denote which checkboxes are checked
+
+#0.44.1
++ Fixed /tables sorting
+
+#0.44.0
++ Updated Font Awesome version and its icon usage in /login
+
+#0.43.1
++ Added /nested_frames back to the examples list
+
+#0.43.0
++ Updated new window example so the page title is more descriptive on the new window that gets loaded
+
+#0.42.0
++ Changed the typo example so the typo appears at the end of the sentence
++ Added a more detailed image for the shifting image example with URL parameter option to display the simpler one instead
+
+#0.41.0
++ Split /shifting_content into a main page with two sub-examples (menu element and images, respectively)
++ Added a new example that demonstrates typos randomly appearing on each page load
+
+#0.40.2
++ Added some semantic markup on the /dynamic_content page to make it easier for targeting individual rows in automated tests.
+
+#0.40.1
++ Fixed a bug in the /shifting_content random example and down-sized it all down to one route that handles all use cases (e.g., normal, random, and specified pixel count). Also added helper text with links to the view
+
+#0.40.0
++ Made is so the number of pixels can be specified in the URL for /shifting_content and /shifting_content/random
+
 #0.39.0
 + Pulled in the pull request for a dynamic controls example
 
